@@ -4,7 +4,7 @@
   "description": "Atrapalo's Paint App Test",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
     "build": "webpack --mode production",
     "prettier": "prettier --write src/**/*.js"
   },
@@ -20,6 +20,7 @@
     "eslint-loader": "^3.0.3",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "path": "^0.12.7",

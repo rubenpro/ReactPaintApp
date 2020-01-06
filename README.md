@@ -8,4 +8,4 @@
 
 ### Styled components
 
-### HOT MODULE REPLACEMENT
+### Install HMR (HOT MODULE REPLACEMENT) in order to reload automatically the affected part instead of all the page)
