@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "prettier": "prettier --write src/**/*.js"
   },
   "author": "Rubén Pacheco Rodríguez",
   "license": "MIT",
@@ -22,6 +23,7 @@
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
     "path": "^0.12.7",
+    "prettier": "^1.19.1",
     "webpack": "4.41.5",
     "webpack-cli": "3.3.10",
     "webpack-dev-server": "3.10.1"
