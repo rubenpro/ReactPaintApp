@@ -10,7 +10,10 @@
     "build": "webpack --mode production",
     "prettier": "prettier --write src/**/*.js",
     "lint": "eslint --debug src/",
-    "lint:write": "eslint --debug src/ --fix"
+    "lint:write": "eslint --debug src/ --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",    
+    "test:coverage": "jest --coverage --colors"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
