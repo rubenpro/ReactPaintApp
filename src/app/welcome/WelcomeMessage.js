@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const styles = {
-  heading: {
+  /* heading: {
     color: '#fff',
     textAlign: 'center',
     marginBottom: 15,
-  },
+  }, */
   logo: {
     width: 250,
     heading: 250,
@@ -17,7 +17,7 @@ const styles = {
 const WelcomeMessage = ({ imgPath }) => {
   return (
     <>
-      <h1 style={styles.heading}>Welcome To</h1>
+      {/* <h1 style={styles.heading}>Welcome To</h1> */}
       <img src={imgPath} alt="app logo" style={styles.logo} />
     </>
   );

@@ -1,0 +1,23 @@
+const defaultColors = [
+  '#f83b2c',
+  '#f3015f',
+  '#9906a5',
+  '#4f1d9c',
+  '#3b48bb',
+  '#45b052',
+  '#009788',
+  '#01bbd4',
+  '#00a3f3',
+  '#0196fa',
+  '#87c54a',
+  '#ccdf33',
+  '#ffed34',
+  '#fdc223',
+  '#fc991b',
+  '#000000',
+  '#5f7c8c',
+  '#9c9c9c',
+  '#7a5447',
+  '#f9550e',
+];
+export default defaultColors;

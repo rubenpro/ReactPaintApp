@@ -1,5 +1,7 @@
 # TODO
 
+### **Transform it to a [PWA](https://codeburst.io/progressive-web-app-with-webpack-198b073f6c74)**
+
 ### **Testing**
 
 - Unit testing
@@ -11,5 +13,7 @@
 ### **Install HMR (HOT MODULE REPLACEMENT)** in order to reload automatically the affected part instead of all the page)
 
 ### **Install Husky and Lint-Staged** to increase performance when commit/push changes.
+
+### **Add StyledComponents [Integration](https://www.styled-components.com/docs), like Babel, Jest and Lint**
 
 ### Do better documentation management with [Markdown](https://thisdavej.com/build-an-amazing-markdown-editor-using-visual-studio-code-and-pandoc/)
