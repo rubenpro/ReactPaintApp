@@ -7,8 +7,8 @@ const App = () => {
   return (
     <div id="app">
       <GlobalStyle bgDarkGrey />
-      <WelcomeMessage imgPath="https://picsum.photos/200" />
       <Canvas />
+      <WelcomeMessage imgPath="https://picsum.photos/200" />
     </div>
   );
 };
