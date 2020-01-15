@@ -7,12 +7,15 @@ const GlobalStyle = createGlobalStyle`
   body {
       background-color: ${props => (props.bgDarkGrey ? 'darkgrey' : 'white')};
   }
+  .bold {
+    font-weight: bold;
+  }
   #app {
     margin: 0.3em 0;
     font-family: 'Roboto', 'Verdana';
   }
-  .bold {
-    font-weight: bold;
+  #myCanvas {
+    border: 2px solid black;
   }
 `;
 
