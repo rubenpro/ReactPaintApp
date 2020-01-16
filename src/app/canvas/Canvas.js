@@ -1,102 +1,135 @@
-import React, { useState, useRef } from 'react';
-import styled from 'styled-components';
-import CanvasDraw from 'react-canvas-draw';
-import CanvasContainer from './CanvasContainer';
-import SectionContainer from './features/section/SectionContainer';
-import BrushContainer from './features/brush/BrushContainer';
-import BrushPicker from './features/brush/BrushPicker';
-import BrushColorPicker from './features/brush/BrushColorPicker';
-import BrushColorContainer from './features/brush/BrushColorContainer';
-import DefaultColors from './DefaultColors';
-import DefaultSizes from './DefaultSizes';
-import RGBToHex from '../utilities/RGBToHex';
-import MyCanvas from './MyCanvas';
-import Undo from '../assets/undo.svg';
-import Redo from '../assets/redo.svg';
-import Clean from '../assets/recycle.svg';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-const IconButton = styled.div`
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-`;
+class Canvas extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      redoList: [],
+      undoList: [],
+      isDrawing: false,
+      canvas: '',
+      ctx: {},
+    };
+  }
 
-function Canvas() {
-  const [color, setColor] = useState('#000000');
-  const [size, setSize] = useState(16);
-  const childRef = useRef();
+  componentDidMount() {
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
 
-  const handleColor = e => {
-    const newColor = RGBToHex(getComputedStyle(e.target).backgroundColor);
-    setColor(newColor);
+    canvas.addEventListener('mousedown', e => {
+      const { brushSize, brushColor } = this.props;
+      const x = e.pageX - canvas.offsetLeft;
+      const y = e.pageY - canvas.offsetTop;
+
+      ctx.lineWidth = brushSize;
+      ctx.strokeStyle = brushColor;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+
+      this.saveState(canvas);
+      this.setState({ isDrawing: true });
+    });
+
+    canvas.addEventListener('mousemove', e => {
+      const { isDrawing } = this.state;
+
+      if (isDrawing) {
+        const x = e.pageX - canvas.offsetLeft;
+        const y = e.pageY - canvas.offsetTop;
+        ctx.lineTo(x, y);
+        ctx.stroke();
+      }
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      const { isDrawing } = this.state;
+
+      if (isDrawing) {
+        this.setState({ isDrawing: false });
+      }
+    });
+
+    canvas.addEventListener('mouseout', () => {
+      const { isDrawing } = this.state;
+
+      if (isDrawing) {
+        this.setState({ isDrawing: false });
+      }
+    });
+  }
+
+  saveState = (canvas, keepRedo = false, type) => {
+    const ctx = canvas.getContext('2d');
+
+    this.setState({ canvas, ctx });
+
+    if (!keepRedo) {
+      this.setState({ redoList: [] });
+    }
+
+    if (type === 'redo') {
+      this.setState(prevState => ({
+        redoList: [...prevState.redoList, canvas.toDataURL()],
+      }));
+    } else {
+      this.setState(prevState => ({
+        undoList: [...prevState.undoList, canvas.toDataURL()],
+      }));
+    }
   };
 
-  const handleSize = brushSize => setSize(brushSize);
+  restoreState = (canvas, ctx, list, type) => {
+    const { canvasWidth, canvasHeight } = this.props;
+    if (list.length) {
+      this.saveState(canvas, true, type);
+      const restore = list.pop();
+      const img = new Image();
+      img.src = restore;
+      img.onload = () => {
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight, 0, 0, canvasWidth, canvasHeight);
+      };
+    }
+  };
 
-  const handleUndo = () => childRef.current.handleUndo();
+  handleUndo = () => {
+    const { canvas, ctx, undoList } = this.state;
+    this.restoreState(canvas, ctx, undoList, 'redo');
+  };
 
-  const handleRedo = () => childRef.current.handleRedo();
+  handleRedo = () => {
+    const { canvas, ctx, redoList } = this.state;
+    this.restoreState(canvas, ctx, redoList, 'undo');
+  };
 
-  const clean = () => childRef.current.clean();
+  clean = () => {
+    const { canvas, ctx } = this.state;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.setState({ undoList: [], redoList: [] });
+  };
 
-  return (
-    <CanvasContainer>
-      <div>
-        <SectionContainer horizontal>
-          <IconButton title="Undo" onClick={handleUndo}>
-            <Undo />
-          </IconButton>
-          <IconButton title="Redo" onClick={handleRedo}>
-            <Redo />
-          </IconButton>
-          <IconButton title="Clean" onClick={clean}>
-            <Clean />
-          </IconButton>
-        </SectionContainer>
-        <SectionContainer>
-          <div className="bold">Brush Color:</div>
-          <BrushColorContainer id="color-container" inlineGrid columns={5}>
-            {DefaultColors.map(defaultColor => (
-              <BrushColorPicker
-                key={defaultColor}
-                className={defaultColor === color && 'selected'}
-                brushColor={defaultColor}
-                onClick={handleColor}
-              />
-            ))}
-          </BrushColorContainer>
-        </SectionContainer>
-        <SectionContainer>
-          <div className="bold">Line Weight:</div>
-          {DefaultSizes.map(defaultSize => (
-            <BrushContainer
-              className={defaultSize === size && 'selected'}
-              key={defaultSize}
-              onClick={() => handleSize(defaultSize)}
-            >
-              <BrushPicker brushSize={defaultSize} />
-            </BrushContainer>
-          ))}
-        </SectionContainer>
-      </div>
-      {/* <CanvasDraw
-        lazyRadius={0}
-        brushRadius={size}
-        brushColor={color}
-        catenaryColor={color}
-        hideGrid={!!true}
-        canvasWidth={1152}
-        canvasHeight={648}
-      /> */}
-      <MyCanvas
-        ref={childRef}
-        brushColor={color}
-        brushSize={size}
-        canvasWidth={1152}
-        canvasHeight={648}
-      />
-    </CanvasContainer>
-  );
+  render() {
+    const { canvasWidth, canvasHeight } = this.props;
+    return <canvas id="myCanvas" width={canvasWidth} height={canvasHeight} />;
+  }
 }
 
 export default Canvas;
+
+Canvas.propTypes = {
+  brushColor: PropTypes.string,
+  brushSize: PropTypes.number,
+  canvasWidth: PropTypes.number,
+  canvasHeight: PropTypes.number,
+};
+
+Canvas.defaultProps = {
+  brushColor: '#000000',
+  brushSize: 16,
+  canvasWidth: 1152,
+  canvasHeight: 648,
+};

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const SectionContainer = styled.div`
+const FeatureContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 1em;
@@ -8,4 +8,4 @@ const SectionContainer = styled.div`
   justify-content: ${props => (props.horizontal ? 'space-evenly' : 'flex-start')};
 `;
 
-export default SectionContainer;
+export default FeatureContainer;
