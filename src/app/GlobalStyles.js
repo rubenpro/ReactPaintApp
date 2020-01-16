@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', 'Verdana';
   }
   #myCanvas {
-    border: 2px solid black;
+    background-color: #ffffff;
   }
 `;
 

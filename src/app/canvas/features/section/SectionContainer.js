@@ -1,14 +1,11 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
-import React from 'react';
 import styled from 'styled-components';
 
-const Section = styled.div`
+const SectionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 1em;
+  margin: 1em;
+  flex-direction: ${props => (props.horizontal ? 'row' : 'column')};
+  justify-content: ${props => (props.horizontal ? 'space-evenly' : 'flex-start')};
 `;
-
-const SectionContainer = props => <Section>{props.children}</Section>;
 
 export default SectionContainer;

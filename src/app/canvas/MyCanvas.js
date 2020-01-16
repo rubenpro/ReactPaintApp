@@ -16,16 +16,16 @@ class MyCanvas extends Component {
   componentDidMount() {
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
-    const { brushSize, brushColor } = this.props;
-
-    ctx.lineWidth = brushSize;
-    ctx.strokeStyle = brushColor;
-    ctx.lineJoin = 'round';
-    ctx.lineCap = 'round';
 
     canvas.addEventListener('mousedown', e => {
+      const { brushSize, brushColor } = this.props;
       const x = e.pageX - canvas.offsetLeft;
       const y = e.pageY - canvas.offsetTop;
+
+      ctx.lineWidth = brushSize;
+      ctx.strokeStyle = brushColor;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
 
       ctx.beginPath();
       ctx.moveTo(x, y);
@@ -114,20 +114,7 @@ class MyCanvas extends Component {
 
   render() {
     const { canvasWidth, canvasHeight } = this.props;
-    return (
-      <>
-        <canvas id="myCanvas" width={canvasWidth} height={canvasHeight} />
-        <button type="button" onClick={this.handleUndo}>
-          Undo
-        </button>
-        <button type="button" onClick={this.handleRedo}>
-          Redo
-        </button>
-        <button type="button" onClick={this.clean}>
-          Clean
-        </button>
-      </>
-    );
+    return <canvas id="myCanvas" width={canvasWidth} height={canvasHeight} />;
   }
 }
 
