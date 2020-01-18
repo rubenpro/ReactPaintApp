@@ -1,3 +1,10 @@
+# README
+
+### To run the app, just execute ```npm run start```
+### To run the test, just execute ```npm run test```
+### To make code looks better run ```npm run prettier```
+### To review the code just execute ```npm run lint```
+
 # TODO
 
 ### **Transform it to a [PWA](https://codeburst.io/progressive-web-app-with-webpack-198b073f6c74)**
@@ -5,7 +12,7 @@
 ### **Testing**
 
 - Unit testing
-- Snapshot testing (el resultado de una accion con un componente, cuando este no varia de estructura en el tiempo, a través de la comparación de ambos componentes. SHALLOW)
+- Snapshot testing (el resultado de una accion con un componente, cuando este no varia de estructura en el tiempo, a través de la comparación de ambos componentes. SHALLOW RENDER)
 - Integration testing (partes individuales combinadas y probadas en conjunto)
 - Style testing (CSS)
 - Manual testing (prueba-error)

@@ -17,6 +17,8 @@ class Canvas extends Component {
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
 
+    // Add event listeners for mobile debiles. Instead of mouse, use touch
+
     canvas.addEventListener('mousedown', e => {
       const { brushSize, brushColor } = this.props;
       const x = e.pageX - canvas.offsetLeft;
